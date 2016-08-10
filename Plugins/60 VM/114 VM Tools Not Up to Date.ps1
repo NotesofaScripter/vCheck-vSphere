@@ -10,6 +10,7 @@ $VMTMaxReturn = 1000
 
 # Changelog
 ## 1.0 : Initial Version
+## 1.1 : Updated to work for productlocker so the tools version detection had to be changed to compare to a static value
 
 
 $Result = @($FullVM | Where {$_.Name -notmatch $VMTDoNotInclude} | Where {$_.Runtime.Powerstate -eq "poweredOn" -and $_.Guest.ToolsVersion -lt $VMTools } | `
