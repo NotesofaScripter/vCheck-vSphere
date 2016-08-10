@@ -1,8 +1,10 @@
 # Start of Settings
 # Do not report on any VMs who are defined here (regex)
 $VMTDoNotInclude = "VM1_*|VM2_*"
+# VMware Tools Version
+$VMTools = "10249"
 # Maximum number of VMs shown
-$VMTMaxReturn = 30
+$VMTMaxReturn = 1000
 # End of Settings
 
 
@@ -10,9 +12,9 @@ $VMTMaxReturn = 30
 ## 1.0 : Initial Version
 
 
-$Result = @($FullVM | Where {$_.Name -notmatch $VMTDoNotInclude} | Where {$_.Runtime.Powerstate -eq "poweredOn" -And $_.Guest.toolsStatus -eq "toolsOld"} | `
+$Result = @($FullVM | Where {$_.Name -notmatch $VMTDoNotInclude} | Where {$_.Runtime.Powerstate -eq "poweredOn" -and $_.Guest.ToolsVersion -lt $VMTools } | `
 	Select Name, @{N="Version";E={$_.Guest.ToolsVersion}}, @{N="Status";E={$_.Guest.ToolsStatus}})
-$Return = $Result | Sort Name | Select -First $VMTMaxReturn
+$Return = $Result | Sort Name | Select -First $VMTMaxReturn | Sort -Property Version -Descending
 $Return
 
 
@@ -20,6 +22,6 @@ $Title = "VM Tools Not Up to Date"
 $Header = "VM Tools Not Up to Date: $(@($Result).Count)"
 $Comments = "The following VMs are running an older version of Tools than is available on its Host (Max Shown: $VMTMaxReturn Exceptions: $VMTDoNotInclude)"
 $Display = "Table"
-$Author = "Alan Renouf, Shawn Masterson"
-$PluginVersion = 1.0
+$Author = "Alan Renouf, Shawn Masterson, updated by Stuart Yerdon"
+$PluginVersion = 1.1
 $PluginCategory = "vSphere"
