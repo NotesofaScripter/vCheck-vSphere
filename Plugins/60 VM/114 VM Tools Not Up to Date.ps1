@@ -13,7 +13,7 @@ $VMTMaxReturn = 1000
 
 
 $Result = @($FullVM | Where {$_.Name -notmatch $VMTDoNotInclude} | Where {$_.Runtime.Powerstate -eq "poweredOn" -and $_.Guest.ToolsVersion -lt $VMTools } | `
-	Select Name, @{N="Version";E={$_.Guest.ToolsVersion}}, @{N="Status";E={$_.Guest.ToolsStatus}})
+	Select Name, @{N="Version";E={$_.Guest.ToolsVersion}}, @{Expression={if ($_.Guest.ToolsStatus -eq "toolsOK") {"toolsOld"} Else {$_.Guest.ToolsStatus}}; Label="Status" }) #     @{N="Status";E={$_.Guest.ToolsStatus}})
 $Return = $Result | Sort Name | Select -First $VMTMaxReturn | Sort -Property Version -Descending
 $Return
 
