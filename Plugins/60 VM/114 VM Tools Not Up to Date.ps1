@@ -22,6 +22,6 @@ $Title = "VM Tools Not Up to Date"
 $Header = "VM Tools Not Up to Date: $(@($Result).Count)"
 $Comments = "The following VMs are running an older version of Tools than is available on its Host (Max Shown: $VMTMaxReturn Exceptions: $VMTDoNotInclude)"
 $Display = "Table"
-$Author = "Alan Renouf, Shawn Masterson, updated by Stuart Yerdon"
+$Author = "Alan Renouf, Shawn Masterson, Stuart Yerdon"
 $PluginVersion = 1.1
 $PluginCategory = "vSphere"
